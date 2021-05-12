@@ -5,13 +5,13 @@ Docker Image of Ansible for executing ansible-playbook command against an extern
 ## Build
 
 ```
-docker build -t agrogov/ansible-playbook .
+docker build -t morgulio/ansible-playbook .
 ```
 
 ### Test
 
 ```
-$ docker run --name ansible-playbook --rm agrogov/ansible-playbook --version
+$ docker run --name ansible-playbook --rm morgulio/ansible-playbook --version
 
 ansible-playbook 2.3.0.0
   config file =
@@ -22,13 +22,13 @@ ansible-playbook 2.3.0.0
 ## Running Ansible Playbook
 
 ```
-docker run --rm -it -v PATH_TO_LOCAL_PLAYBOOKS_DIR:/ansible/playbooks agrogov/ansible-playbook PLAYBOOK_FILE
+docker run --rm -it -v PATH_TO_LOCAL_PLAYBOOKS_DIR:/ansible/playbooks morgulio/ansible-playbook PLAYBOOK_FILE
 ```
 
 For example, assuming your project's structure follows [best practices](http://docs.ansible.com/ansible/playbooks_best_practices.html#directory-layout), the command to run ansible-playbook from the top-level directory would look like:
 
 ```
-docker run --rm -it -v $(pwd):/ansible/playbooks agrogov/ansible-playbook site.yml
+docker run --rm -it -v $(pwd):/ansible/playbooks morgulio/ansible-playbook site.yml
 ```
 
 Ansible playbook variables can simply be added after the playbook name.
@@ -43,7 +43,7 @@ docker run --rm -it \
   -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub \
   -v $(pwd):/ansible/playbooks \
   -v /var/log/ansible/ansible.log \
-  agrogov/ansible-playbook "$@"
+  morgulio/ansible-playbook "$@"
 ```
 
 Point the above script to any inventory file so that we can execute any Ansible command on any host, e.g.
@@ -61,7 +61,7 @@ docker run --rm -it \
     -v ~/.ssh/id_rsa:/root/.ssh/id_rsa \
     -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub \
     -v $(pwd):/ansible/playbooks \
-    agrogov/ansible-playbook site.yml
+    morgulio/ansible-playbook site.yml
 ```
 
 ## Ansible Vault
@@ -71,7 +71,7 @@ If you've encrypted any data using [Ansible Vault](http://docs.ansible.com/ansib
 ```
 docker run --rm -it -v $(pwd):/ansible/playbooks \
     -v ~/.vault_pass.txt:/root/.vault_pass.txt \
-    agrogov/ansible-playbook \
+    morgulio/ansible-playbook \
     site.yml --vault-password-file /root/.vault_pass.txt
 ```                    
 
@@ -79,5 +79,5 @@ Note: the Ansible Vault executable is embedded in this image. To use it, specify
 
 ```
 docker run --rm -it -v $(pwd):/ansible/playbooks --entrypoint ansible-vault \
-  agrogov/ansible-playbook encrypt FILENAME
+  morgulio/ansible-playbook encrypt FILENAME
 ```
